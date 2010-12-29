@@ -3,7 +3,7 @@
 All the software you need to host AppJet apps.
 
 This repository hosts sources of the original Appjet.jar web application framework and our additions to it. You will find everything needed to run 
-Appjet apps locally or to host on your own server. The same framework is running 
+Appjet apps locally or to host them on your own server. This is the same version of the framework that is running 
 on <http://apps.jgate.de> where you can also host your appjet applications. 
 
 ## Download
