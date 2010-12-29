@@ -45,7 +45,7 @@ for when to rebase.
 ## Resources
 
 Here is our [bug tracker](https://github.com/dvbportal/appjet/issues) and our
-[roadmap](https://github.com/dvbportal/appjet/wiki/Roadmap).
+[roadmap](https://github.com/dvbportal/appjet/wiki/Appjet-Roadmap-and-Wishlist).
 
 
 More general info and updates about the project can be found on
