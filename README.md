@@ -2,8 +2,8 @@
 
 All the software you need to host AppJet apps.
 
-This repository hosts our additions to the original Appjet.jar web application framework. It contains everything needed to run 
-Appjet apps locally or hosted on your own server. The same framework is running 
+This repository hosts sources of the original Appjet.jar web application framework and our additions to it. You will find everything needed to run 
+Appjet apps locally or to host on your own server. The same framework is running 
 on <http://apps.jgate.de> where you can also host your appjet applications. 
 
 ## Download
@@ -27,6 +27,7 @@ Just put the jar file somewhere accessible from the command prompt.
 	
 That's it! _myapp.js_ should contain the same JavaScript code that you would use for an app hosted on apps.jgate.de.
 
+For [full instructions](http://github.com/dvbportal/appjet/wiki/Running-An-Appjet-App) have a look at the wiki.
 
 ## Contributing to Appjet.jar
 
