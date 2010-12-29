@@ -8,7 +8,7 @@ on <http://apps.jgate.de> where you can also host your appjet applications.
 
 ## Download
 
-[appjet-1.0.4.jar](http://jgate.de/jar/appjet-1.0.4.jar)  --  Dec 12 2010 20:47:10 GMT+0100
+[appjet-1.0.4.jar](http://static.jgate.de/jar/appjet-1.0.4.jar)  --  Dec 12 2010 20:47:10 GMT+0100
 
 ## Requirements
 
