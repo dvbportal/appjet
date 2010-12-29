@@ -275,65 +275,65 @@ QuickForm.prototype.addInputHidden = function(id, val) {
   return this;
 };
 
-// /**
-//  * Creates a drop-down menu to the form that allows a user to select
-//  * from several options.
-//  * @param {string} id a unique id string, used as a parameter name for
-//  * this field
-//  * @param {iterable} base an object that supports the
-//  * <code>forEach</code> method, and whose elements contain the
-//  * properties for the option elements.
-//  * @param {object} keys a dictionary with properties "value",
-//  * "content", and "selected", that specify the property of
-//  * <code>base</code>'s objects that should be used as the "value",
-//  * menu text, and whether that menu item is selected, respecitvely.
-//  * @param {object} [opts] an optional dictionary of options.
-//  * @function
-//  */
-// QuickForm.prototype.addSelect = function(id, base, keys, opts) {
-//   // label
-//   var labelText = (opts && opts.label) ? opts.label : id;
-//   this.form.push(DIV({className: 'qflabeldiv'},
-//              LABEL({htmlFor: id,
-//                className: 'qflabel'},
-//                labelText)));
+/**
+ * Creates a drop-down menu to the form that allows a user to select
+ * from several options.
+ * @param {string} id a unique id string, used as a parameter name for
+ * this field
+ * @param {iterable} base an object that supports the
+ * <code>forEach</code> method, and whose elements contain the
+ * properties for the option elements.
+ * @param {object} keys a dictionary with properties "value",
+ * "content", and "selected", that specify the property of
+ * <code>base</code>'s objects that should be used as the "value",
+ * menu text, and whether that menu item is selected, respecitvely.
+ * @param {object} [opts] an optional dictionary of options.
+ * @function
+ */
+QuickForm.prototype.addSelect = function(id, base, keys, opts) {
+  // label
+  var labelText = (opts && opts.label) ? opts.label : id;
+  this.form.push(DIV({className: 'qflabeldiv'},
+             LABEL({htmlFor: id,
+               className: 'qflabel'},
+               labelText)));
 
-//   // container
-//   var container = DIV({className: 'selectdiv qffield'});
+  // container
+  var container = DIV({className: 'selectdiv qffield'});
 
-//   // beforeText
-//   if (opts && opts.beforeText) {
-//     container.push(SPAN({className: 'surroundtext'}, opts.beforeText));
-//   }
-  
-//   // input
-//   var attrs = {className: 'qfinputtext',
-//            type: 'text',
-//            name: id,
-//            id: id};
-//   var quotestripper = new RegExp("\"", "g");
-//   eachProperty(opts, function(k, v) {
-//     attrs[k] = String(v).replace(quotestripper, "&quot;");
-//   });
-//   var select = SELECT(attrs);
-//   container.push(select);
+  // beforeText
+  if (opts && opts.beforeText) {
+    container.push(SPAN({className: 'surroundtext'}, opts.beforeText));
+  }
 
-//   base.forEach(function(obj) {
-//     var attrs = {name: id, 
-//                  value: String(obj[keys.value]).replace(quotestripper, "&quot;")};
-//     if (obj[keys.selected])
-//       attrs.selected = "selected";
-//     select.push(new OPTION(attrs, obj[keys.content]));
-//   });
+  // input
+  var attrs = {className: 'qfinputtext',
+           type: 'text',
+           name: id,
+           id: id};
+  var quotestripper = new RegExp("\"", "g");
+  eachProperty(opts, function(k, v) {
+    attrs[k] = String(v).replace(quotestripper, "&quot;");
+  });
+  var select = SELECT(attrs);
+  container.push(select);
 
-//   // afterText
-//   if (opts && opts.afterText) {
-//     container.push(SPAN({className: 'surroundtext'}, opts.afterText));
-//   }
+  base.forEach(function(obj) {
+    var attrs = {name: id, 
+                 value: String(obj[keys.value]).replace(quotestripper, "&quot;")};
+    if (obj[keys.selected])
+      attrs.selected = "selected";
+    select.push(new OPTION(attrs, obj[keys.content]));
+  });
 
-//   this.form.push(container);
-//   return this;
-// }
+  // afterText
+  if (opts && opts.afterText) {
+    container.push(SPAN({className: 'surroundtext'}, opts.afterText));
+  }
+
+  this.form.push(container);
+  return this;
+}
   
 
 /**

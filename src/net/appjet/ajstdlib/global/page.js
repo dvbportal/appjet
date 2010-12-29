@@ -20,7 +20,7 @@ var _MODES = new StringSet('html', 'plain', 'facebook');
 
 var _mode = 'html';
 var _title = appjet.appName;
-var _icon = "http://appjet.com/favicon.ico";
+var _icon = "http://apps.jgate.de/static/favicon.ico";
 var _showRenderTime = true;
 var _headbuffer = [];
 var _bodybuffer = [];
@@ -163,8 +163,9 @@ var _HTML_FOOTER_TEMPLATE = """
      style="border-top: 1px solid #ccc; margin-top: 1.2em; font-family: verdana, helvetica, sans-serif; font-size: 0.8em;">
 <div style="float: left;">
   <span style="vertical-align: top;">
-    Powered by <a target="_blank" href="http://appjet.com/">AppJet</a>
-    <span style="font-size: 1.0em">&#9992;</span>
+    Powered by <a target="_blank" href="http://blog.jgate.de/appjet-the-platform-behind-jgate" title="Powered by AppJet">AppJet</a>
+    <span style="font-size: 1.0em; margin-right: 5px;">&#9992;</span>on
+    <a target="_blank" href="http://{mainDomain}/" title="Build your own app on JGate">JGate</a>
   </span>
 </div>
 <div style="float: right;">
@@ -174,8 +175,9 @@ var _HTML_FOOTER_TEMPLATE = """
 </div>
 """; // "; // <-- unconfuse emacs
 
-var _HTML_FOOTER_SOURCE_PREVIEW = "http://appjet.com/app/{encodedAppKey}/source";
-var _HTML_FOOTER_SOURCE_PUBLISH = "http://source.{appName}.{mainDomain}/";
+var _HTML_FOOTER_SOURCE_PREVIEW = "http://{mainDomain}/platform/source?{appName}";
+//var _HTML_FOOTER_SOURCE_PUBLISH = "http://source.{appName}.{mainDomain}/";
+var _HTML_FOOTER_SOURCE_PUBLISH = "http://{mainDomain}/platform/source?{appName}";
 
 function _setAggressiveNoCacheHeaders() {
   // be aggressive about not letting the response be cached.
