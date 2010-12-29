@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC
+	    "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en-us" />
+    
+    <title>AppJet Shell</title>
+    
+    <!-- style -->
+    <link href="/lib/css/0/appjet.css" rel="stylesheet" type="text/css" />
+    
+    <!-- script -->
+    <script src="/lib/js/0/jquery-1.2.6.js" type="text/javascript"></script>
+    <script src="/lib/js/0/ace.js" type="text/javascript"></script>
+    <script src="/lib/js/0/appjet.js" type="text/javascript"></script>
+
+  </head>
+
+  <body id="appjetcom" class="">
+
+      
+    
+      <div id="pagebody1" >
+	<div id="pagebody2">
+	    
+	    
+	    
+	    <div id="pagebodyinner">
+	          
+
+<div id="shellpage">
+
+<div id="initmessage">  
+  <p><img src="/lib/img/status-ball.gif" width="16"height="16" id="statusballinit" class="statusball" />&nbsp;Initializing
+    shell on <tt>%host%</tt></p>
+</div>
+
+<div id="shelltitle">
+  
+</div>
+
+<div id="output"></div>
+
+<div id="promptlabel">command:</div>
+
+<div id="appjet_code_window"></div>
+
+<div id="rundiv">
+  <button id="runbutton"
+	    onclick="Appjet.Shell.exec()">&nbsp;Run&nbsp;</button>
+  <img src="/lib/img/status-ball.gif" width="16"height="16" id="statusballrun" class="statusball" />
+  <span id="keytip">(Shift+Enter)</span>
+</div>
+
+</div><!-- /shell -->
+
+</div>	           
+</div>
+</div>
+      <script type="text/javascript">
+	Appjet.jsvars = ({skipAppCodeInit:"true", useModernEditor:true, engineHost:"localhost", encodedAppId:0, localAppName:"&lt;local&gt;", frontendHost:"localhost"})
+      </script>
+  </body>
+</html>

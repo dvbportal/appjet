@@ -1,0 +1,1992 @@
+/*----------------------------------------------------------------*/
+/* global */
+/*----------------------------------------------------------------*/
+
+* { margin: 0; padding: 0; }
+html {}
+
+a:link {color: #00d;}
+a:visited {color: #00d;}
+a:hover {color: #900;}
+a:link:hover, a:visited:hover { text-decoration: underline; }
+
+body#appjetcom {
+   font-family: verdana, helvetica, sans-serif;
+   font-size: 76%;
+}
+
+body.fullwid { background: #fff url(/img/june08/backgrad.png) repeat-x top left; }
+body.limwid { background: #fff url(/img/june08/backgrad.png) repeat-x top left; }
+
+.clearfloats { clear: both; height: 0; }
+.invisible, .hidden { display: none; }
+.statusball { display: none; /* must be shown by javascript */ }
+
+div.formerror {
+   width: 400px;
+   color: #dd3030;
+   font-weight: bold;
+   text-align: center;
+}
+
+span.apptitle { color: #005825; }
+
+div#appjet_code_window {
+   border: 1px solid black;
+   overflow: hidden;
+}
+
+div#appjet_code_window iframe { width: 100%; }
+
+h1.ajheader1 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   text-align: left;
+   font-size: 200%;
+   color: #333;
+   margin: 6px 0;
+   padding: 0;
+}
+
+/*----------------------------------------------------------------
+ * IDE
+ *----------------------------------------------------------------*/
+
+#idepage {
+   padding: 4px;
+   padding-top: 8px;
+}
+
+#idepage div#appjet_code_window { border-right: 0; }
+
+/* browser notice */
+#idepage div.topmessage {
+   width: 66%;
+   background: #F7F4D4;
+   border: 1px solid #807B4D;
+   padding: 0.7em 0.4em 0.2em 0.4em;
+   margin: 1.0em;
+}
+#idepage div.topmessage a { font-size: 0.8em; }
+#idepage div.topmessage #hide { float: right; }
+
+/* toolbar table */
+#idepage #toolbartable, #idepage #idemaintable {
+   width: 100%;
+   margin-top: 0;
+   position: relative; /* ie hasLayout fix */
+}
+   
+/* ide toolbar elements */
+#idepage #appjet_code_window { border-top: 0; }
+#idepage #toolbartable td { border-bottom: 1px solid black; }
+#idepage #toolbartable #toolbarLeft { text-align: left; vertical-align: middle; }
+#idepage #toolbartable #toolbarRight { vertical-align: bottom; }
+#idepage #savebutton { width: 6.0em; height: 1.8em; }
+#idepage #topmessage, #idepage #publishmessage { color: #bb4422; }
+#idepage #hidesidepanelink { margin: 0; padding: 3px; border-left: 1px solid #ccc; float: left; }
+#idepage #ff_fix { margin: 0; padding: 3px; float: left; }
+#idepage span#appname { margin-left: 1.0em; }
+#idepage a#renamelink { margin-left: 1.0em; font-size: 0.8em; }
+#idepage #toolbartable td { padding-bottom: 0; margin-bottom: 0; white-space: nowrap; }
+
+/* ide tabs */
+#idepage div#idetabs ul {
+   padding: 0 0;
+   margin-left: 0;
+   position: relative;
+   padding-right: 2.0em;
+}
+#idepage div#idetabs ul li {
+   list-style: none;
+   margin: 0;
+   display: inline;
+   position: relative;
+   top: 3px;
+   float: right;
+}
+#idepage div#idetabs ul li a {
+   z-index: 25;
+   padding: 3px 6px;
+   margin-left: 6px;
+   border: 1px solid black;
+   background-color: #dfd;
+   text-decoration: none;
+   outline: none;
+   position: relative; /* ie hasLayout fix */   
+}
+#idepage div#idetabs ul li a img { border: 0; padding: 0; margin: 0; }
+#idepage div#idetabs ul li a:link, #idepage div#idetabs ul li a:visited {
+   color: blue;
+}
+#idepage div#idetabs ul li a:link:hover, #idepage div#idetabs ul li a:visited:hover {
+   color: red;
+   background-color: #aaf;
+   border-color: #227;
+}
+#idepage div#idetabs ul li a.current, #idepage div#idetabs ul li a.current:link:hover, #idepage div#idetabs ul li a.current:visited:hover {
+   background: #eee/*IDE_CHROME*/;
+   border-bottom: 1px solid #eee/*IDE_CHROME*/;
+   padding-top: 6px;
+   color: black;
+}
+
+/* ide main panes */
+#idepage #pane1 { vertical-align: top; }
+#idepage #pane2 { vertical-align: top; background-color: #eee;/*IDE_CHROME*/ }
+
+/* ide side pane and frames */
+#idepage div.pane {
+   width: 100%;
+   border: 1px solid black;
+   border-top: 0;
+}
+
+#idepage div.pane div.panebox {
+   background-color: #fff;
+   border: 1px solid #ccc;
+   margin: 0 8px 8px 8px;
+   padding: 16px;
+}
+
+#idepage iframe {
+   width: 100%;
+   height: 100%;
+   border: 0;
+}
+
+#idepage #bottomlinks {
+   font-size: 10px;
+   margin-top: 2px;
+   color: #ccc;
+   text-align: right;
+}
+#idepage #bottomlinks a { color: #99c; }
+
+/*---- preview pane ----*/
+
+#idepage #previewstartmessage {
+/*   background-color: #fff; */
+   padding: 0 0 20px 20px;
+   font-size: 1.6em;
+/*   color: #666; */
+   color: #000;
+}
+
+#idepage #reloadarrow {
+   display: block;
+   float: right;
+}
+
+#idepage #preview_topnav { width: 100%; background-color: #eee; }
+#idepage #preview_topnav table { }
+#idepage #preview_topnav table td { padding: 1.0em 0.25em; }
+#idepage #previewlabelcell { padding: 0; white-space: nowrap; }
+#idepage #previewhostcell { width: 100%; }
+#idepage #previewnavurl { width: 100%; }
+
+#idepage #previewframe {
+   background: #fff;
+   width: 100%;
+   height: 100px; /* will be fixed by JS */
+   border-top: 1px solid #aaaaaa;
+   display: none;
+}
+
+/*---- publish pane ----*/
+#idepage #publishpane { overflow: auto; }
+
+#idepage #publishpane #publishstatus { margin-bottom: 2.0em; }
+#idepage #publishpane span.publisherror { color: red; }
+#idepage #publishpane #statusdiv { line-height: 25px; }
+#idepage #publishpane #lastpublished { color: #888; }
+#idepage #publishpane #publishnamediv { margin: 0.8em 0 0 1.2em; }
+#idepage #publishpane input#publishedappname { border: 1px solid #8faec6; }
+#idepage #publishpane div#directoryinput { margin: 1.0em 0; }
+#idepage #publishpane button { padding: 4px 8px; }
+#idepage #publishpane #directoryabouttext { width: 100%; }
+
+#idepage #publishpane #ext_domain_cname { color: #060; font-weight: bold; font-size: 1.1em; background-color: #ffa; border: 1px solid #fda;}
+#idepage #publishpane #ext_domain_input { width: 90%; margin-left: auto; margin-right: auto; border: 1px solid #8faec6; }
+#idepage #publishpane #ext_domain_error { color: red; }
+
+/*---- account pane ----*/
+#idepage #accountframe_save {
+   margin: 10px 10px;
+}
+
+/*---- log pane ----*/
+
+#idepage #logpane #logframe_header {
+   padding: 4px 8px;
+   text-align: right;
+}
+#idepage #logpane iframe {
+   margin: 0;
+   padding: 0;
+   height: 100px; /* will be fixed by JS */
+   background-color: #fff;
+   border-top: 1px solid #ccc;
+   width: 100%;
+}
+
+/*----------------------------------------------------------------*/
+/* shell */
+/*----------------------------------------------------------------*/
+
+#shellpage { padding: 8px; background-color: #eee;/*IDE_CHROME*/ }
+#shellpage div#initmessage { white-space: nowrap; width: 100%; }
+
+#shellpage iframe { width: 100%; }
+
+#shellpage #output {
+   width: 100%;
+   overflow: auto;
+   border: solid 1px #ccf;
+   text-align: left;
+   margin: 0;
+   background-color: white;
+}
+
+#shellpage #promptlabel { font-weight: bold; }
+#shellpage div#appjet_code_window { height: 96px; background: #fff; }
+#shellpage .outputblock { margin-bottom: 5px; }
+
+#shellpage .outputblock .outputheader {
+   float: left;
+   font-size: 0.8em;
+   font-weight: bold;
+   width: 80px;
+   text-align: right;
+   padding-top: 0.1em;
+}
+
+#shellpage .outputblock .outputcontent {
+   font-size: 1.0em;
+   font-family: monospace;
+   font-size: 1.2em;
+   margin-left: 16px;
+   margin-top: 0;
+   padding: 0.1em 0.2em 0.2em 0.2em;
+   margin-right: 20px;
+}
+
+#shellpage .outputblock .cmdcommand {
+   background-color: #eeeeee; /* changed by Appjet.Shell.exec.createHistoryDom */
+   padding: 0.2em;
+   border: 1px solid #bbbbbb;
+   margin-left: 8px;
+   margin-top: 5px;
+}
+
+#shellpage .outputblock .cmdoutput {}
+#shellpage .outputblock .cmdresult {}
+#shellpage .outputblock .cmderror { font-style: italic; color: #663300; }
+#shellpage .offendingline { background-color: #ffcccc; }
+#shellpage #rundiv { margin-top: 0.4em; }
+#shellpage #rundiv img { margin-top: 2px; margin-left: 5px; display: inline; }
+#shellpage #rundiv #keytip { color: #333; }
+#shellpage #output .sep { clear: both; margin: 10px; }
+
+/*----------------------------------------------------------------*/
+/* home page (front landing page) */
+/*----------------------------------------------------------------*/
+
+html, body { padding: 0; margin: 0; }
+#homepage { font-family: "Trebuchet MS",verdana,helvetica,sans-serif; }
+.homepagebody { background: transparent !important; }
+#homepage { width: 950px; background: #fff; margin-left: auto; margin-right: auto;
+	  border-left: 1px solid #999; border-right: 1px solid #999; }
+#homepage img { display: block; border: 0; }
+#logobar1 { float: left; border: 0; }
+#logobar2 {
+   background: url(/img/june08/logobar2a.png) repeat-x right top;
+   font-size: 24px;
+   color: #e80;
+   height: 120px; overflow: hidden /*IE*/;
+   font-style: italic;
+}
+
+#homepage2 { padding-bottom: 20px; }
+
+.aboutpagebody #logobar2 div {
+   padding-top: 28px;
+   font-size: 160%;
+   padding-left: 25px;
+}
+
+#logobar2 div {
+  padding-left: 10px;
+  padding-top: 38px;
+  font-weight: bold;
+}
+
+.homepagebody #pagebodyinner, .aboutpagebody #pagebodyinner, .devhomebody #pagebodyinner {
+   padding-bottom: 20px;
+}
+
+#homepage #cppbar { clear: both; margin-bottom: 20px; }
+
+#homepage .formattedcode {
+    font-size: 12px;
+    line-height: 15px;
+    background: #fff6ee;
+}
+
+#homepage { font-size: 16px; color: #666; }
+#homepage #hpnew { padding-left: 25px; font-size: 12px; }
+#homepage #hpnew em { color: brown; }
+#homepage p { margin: 16px; }
+#homepage strong { font-weight: bold; color: #363; }
+#homepage .slanty { font-size: 18px; font-style: italic; color: #363; text-align: center;
+		  padding: 5px; background: #efe; }
+#homepage .largish { font-size: 24px; margin-bottom: 25px; }
+#homepage .biggish { font-size: 18px; font-weight: bold; text-align: center; color: #444; }
+#homepage .biggish strong { font-weight: inherit; color: #696; }
+#homepage .aspectleft { float: left; }
+#homepage .aspectright { float: right; }
+#homepage .aspectwide { margin-left: auto; margin-right: auto; }
+#homepage .aspectleft, #homepage .aspectright {
+    width: 420px; height: 242px; padding: 14px;
+    background: url(/img/june08/aspectbox2.gif) no-repeat bottom center;
+    position: relative; }
+#homepage .aspectwide {
+    width: 884px; height: 134px; padding: 14px;
+    background: url(/img/june08/aspectboxwide2.gif) no-repeat bottom center }
+#homepage .aspects { margin: 20px 0; padding: 0 16px; clear: both;  }
+#homepage .aspects p { color: #666; margin: 0; margin-top: 16px; line-height: 130%; }
+#homepage .aspects h3 { color: #333; font-family: Georgia, serif; font-size: 120%;}
+#homepage .aspects strong { color: #555; font-weight: bold; font-style: italic;
+			  margin-right: 0.2em; }
+#homepage .frontimage {   }
+#homepage .frontimage img { display: block; margin: 0 auto; }
+#homepage .aspects .bullet { color: #999; margin-left: 0.2em; margin-right: 0.2em; }
+
+#homepage #whygood { background: #b3e8b3 url(/img/june08/greenback3.gif) repeat-x top left;
+		     padding: 1px 0;
+		     border-bottom: 1px solid #aaa;
+		     margin-bottom: 20px; }
+
+#homepage .aspectright .linkies,
+#homepage .aspectleft .linkies { position: absolute; left: 12px; top: 205px; }
+#homepage .linky { background: url(/img/june08/minilinkarrow.gif) no-repeat center left;
+		   padding-left: 16px; margin-left: 20px; }
+ 
+#homepage #frontul {
+  margin: 0 16px;
+  /*width: 600px;*/
+}
+
+#homepage #frontul ul {
+  list-style: disc;
+  margin: 0 16px;
+  margin-left: 40px;
+  font-style: italic;
+  margin-bottom: 30px;
+}
+
+#homepage #frontul li {
+  margin-top: 16px;
+}
+
+#homepage #getstartedleadin { float: left; padding: 5px 0; clear: both; }
+#homepage #getstarted { float: right; padding: 5px; background: #efe; }
+
+#homepage #frontexample {
+    margin-left: 0.5em;
+    width: 420px;
+}
+
+#homepage #exampleside {
+    float: right;
+    width: 300px;
+}
+
+#homepage .examplelinks ul { margin-left: 2em; list-style: none; }
+#homepage .examplelinks li { margin: 1em; }
+
+#homepage .runlink {
+    background: url(/img/docman_run.gif) no-repeat center left;
+    padding-left: 14px; }
+
+#homepage .clonelink {
+    background: url(/img/docman_clone.gif) no-repeat center left;
+    padding-left: 14px; }
+
+#homepage .container { padding: 0 20px; }
+
+/*---*/
+
+#homepage #valueprop {
+   margin-left: auto; margin-right: auto;
+   margin-top: 20px; margin-bottom: 18px;
+   width: 65%;
+   font-size: 16px;
+   line-height: 140%;
+   color: #82490C;
+   text-align: center;
+}
+
+#homepage #valueprop em { color: #222; }
+   
+#homepage #sec2 {
+   margin: auto;
+   margin-top: 20px;
+   width: 660px;
+   clear: both;
+   margin-bottom: 20px;
+   font-size: 18px;
+}
+
+#homepage #sec2 #features { float: left; }
+#homepage #sec2 h3 { margin-bottom: 0.5em; }
+   
+#homepage #sec2 ul {
+  /*list-style: disc url(/img/aug/feature_bullet.gif) inside;*/
+  color: #333;
+  list-style-image:none; list-style-position:outside; list-style-type:none;
+  margin: 0;
+  padding: 0;
+}
+
+#homepage #sec2 li {
+   margin: 0;
+   padding: 0;
+   white-space: nowrap;
+   display: block;
+   background-image: url(/img/aug/feature_bullet.gif);
+   background-repeat: no-repeat;
+   background-position: center left;
+   padding-left: 45px;
+   padding-top: 0.5em;
+   padding-bottom: 0.5em;
+}
+
+#homepage #bottom {
+  text-align: center;
+  font-size: 90%;
+  clear: both;
+}
+
+#homepage #viewexamples {
+   display: block; width: 250px; text-align: center;
+   font-size: 24px; color: #2179c2; margin-top: 25px;
+}
+
+#homepage #viewexamples:hover { color: #C47827; }
+
+#homepage #betanote {
+   width: 300px;
+   text-align: center;
+   line-height: 150%;
+}
+
+/*----------------------------------------------------------------*/
+/* aboutpage */
+
+#about {
+   padding: 20px;
+   line-height: 140%;
+}
+
+#about p {
+   font-size: 14px;
+   margin: 10px 20px;
+   line-height: 130%;
+}
+#about ul { margin-left: 20px;  }
+#about li { font-size: 14px; margin: 1em; }
+
+#about h3 {
+   font-size: 140%;
+   margin-top: 20px;
+   color: #666;
+   font-style: italic;
+   margin-left: 20px;
+   border-bottom: 1px solid #ccc;
+}
+
+#about .middletext { margin: 0 60px; }
+
+#about #executiveteamtable {
+   margin: 20px 60px;
+}
+
+#about #executiveteamtable td {
+   padding: 1em;
+   font-size: 120%;
+}
+
+#about #executiveteamtable img { border: 2px solid #999; }
+
+#about #papertoplane { display: block; margin: 0 auto; }
+#about #prose {  }
+#about #prose1 { float: left; width: 348px; padding: 0; }
+#about #prose2 { float: right; width: 348px; padding: 0; }
+
+#about h2 { margin-bottom: 2em; font-size: 200%; }
+
+/*----------------------------------------------------------------*/
+/* userhome */
+
+#userhome { margin: 0; padding; 0; }
+#userhome img { display: block; border: 0; }
+#userhome a { color: blue; font-style: normal; }
+#userhome a:hover { text-decoration: underline; color: #C47827; }
+#userhome #rightcol {
+   float: right;
+   width: 340px;
+   margin-right: 20px;
+   position: relative;
+   padding: 0;
+}
+
+#userhome #leftcol {
+   float: left;
+   width: 400px;
+   margin-left: 20px;
+   position: relative;
+   padding: 0;
+}
+#userhome .box {
+   display: block;
+   border: 1px solid #999;
+   margin: 1em 0;
+   padding: 0;
+   zoom: 1;
+}
+#userhome #systemstatus { margin: 1em 20px 0 20px; }
+#userhome #systemstatus img { display: inline; }
+#userhome .boxtitle {
+   background: #eee;
+   border-bottom: 1px solid #999;
+   padding: 4px;
+   font-weight: bold;
+}
+#userhome .boxtitle a {
+   font-weight: normal;
+   float: right;
+}
+#userhome .boxcontent {
+   display: block;
+   padding: 1em;
+}
+#userhome .newappbox { padding: 0; }
+
+#userhome #survey .boxcontent { padding: 0; }
+#userhome #survey iframe {
+   width: 380px;
+   height: 523px;
+   overflow: auto;
+   padding: 0;
+   border: 0;
+   margin: 0 auto;
+   display: block;
+}
+#userhome #service {
+   margin: 1em 2em;
+   color: black;
+   background: #ffc;
+   border: 1px solid #cba;
+}
+#userhome #service p { margin: 1em;}
+#userhome #service h4 {
+   text-align: left;
+   display: block;
+   width: 100%;
+}
+#userhome #service h4 {
+   font-size: 1.2em;
+   font-weight: bold;
+   font-style: normal;
+   margin-left: 0;
+}
+#userhome #service ul { padding-left: 25px;}
+#userhome #service hr {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+#userhome table#recentapps {}
+#userhome table#recentapps td {
+   padding: 4px 8px;
+   white-space: nowrap;
+}
+#userhome table#recentapps img { display: inline;}
+#userhome table#recentapps td a {}
+#userhome a.withicon img { padding-right: 5px; }
+#userhome a.withicon { text-decoration: none; }
+#userhome a.withicon span { text-decoration: underline; }
+#userhome #news ul { margin-left: 1em;}
+#userhome #news li {
+   margin: .5em 0;
+   line-height: 130%;
+}
+#userhome .stats table {margin: 1em;}
+#userhome .stats table td {
+   padding: 6px 4px;
+   white-space: nowrap;
+}
+#userhome .stats table td.statname {text-align: right;}
+#userhome .stats table td.statdata {
+   text-align: left;
+   color: #933;
+}
+#userhome .stats .boxcontent {
+   margin: 0;
+   padding: 0;
+}
+#userhome .stats #updatefreq {
+   width: 100%;
+   text-align: right;
+   color: #999;
+   font-size: 8pt;
+}
+
+/*----------------------------------------------------------------*/
+
+.ajbutton a {
+  display: block;
+  padding: 0.2em 0.5em;
+  background-color: #ddd;
+  background-image: url(/img/buttonup.gif);
+  background-position: center center;
+  text-decoration: none;
+  color: #000;
+  border: 2px solid #bbb;
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #777;
+  background-repeat: repeat;
+   text-align: center;
+}
+
+.ajbutton a:active {
+  outline: none;
+  background-image: url(/img/buttondown.gif);
+  border: 2px solid #bbb;
+  border-top: 2px solid #777;
+  border-bottom: 2px solid #eee;
+  padding-top: 0.25em;
+  padding-bottom: 0.15em;
+}
+
+#homebottomnav {
+   font-size: 13px;
+   text-align: center;
+   margin-bottom: 0;
+}
+#homebottomnav a {
+   /*color: #444;*/
+}
+#homebottomnav .selected {
+   color: #000;
+   text-decoration: none;
+}
+
+/*----------------------------------------------------------------*/
+/* app instance pages */
+/*----------------------------------------------------------------*/
+
+.appinstance #apprunlink {
+   font-size: 1.4em;
+   float: left;
+   font-weight: bold;
+   margin: 6px 0;
+}
+.appinstance #apprunlink a {
+   font-weight: normal;
+   /*
+   text-decoration: none;
+   color: blue;
+*/
+}
+.appinstance #authorname {
+   font-weight: normal;
+   font-size: 1.0em;
+}
+.appinstance #author {
+   float: right;
+   font-size: 1.4em;
+   font-weight: normal;
+}
+
+/*----------------------------------------------------------------*/
+/* view source page */
+/*----------------------------------------------------------------*/
+#sourcepage #clonebutton {
+   width: 200px; font-size: 1.2em; float: left;
+   margin-bottom: 4px;
+}
+#sourcepage a { color: blue; font-style: normal;  }
+#sourcepage a:hover {text-decoration: underline; color: #C47827; }
+#sourcepage #sourcelinks {
+   margin-top: 12px;
+   float: right;
+}
+/* copied from ace_impl_modern.js */
+#sourcepage div.formattedcodewrapper {
+   font-size: 12px;
+   font-family: monospace;
+   white-space: nowrap;
+   line-height: 16px;
+   background-color: white;
+   border: 1px solid #aaa;
+   padding: 1.0em;
+   overflow: auto;
+   position: relative; /* ie fix */
+}
+
+#sourcepage a.importlink { text-decoration: underline; color: #55c; }
+#sourcepage a.importlink:hover { text-decoration: underline; color: #C47827; }
+
+/* ---------- Used by JavaScript Lexer ---------- */
+.formattedcode .c { color: #bd3f00; font-style: italic } /* Comment */
+.formattedcode .o { font-weight: bold; } /* Operator */
+.formattedcode .p { font-weight: bold; } /* Punctuation */
+.formattedcode .k { color: blue; } /* Keyword */
+.formattedcode .kc { color: purple } /* Keyword.Constant */
+.formattedcode .nx { } /* Name.Other */
+.formattedcode .mf { color: purple } /* Literal.Number.Float */
+.formattedcode .mh { color: purple } /* Literal.Number.Hex */
+.formattedcode .mi { color: purple } /* Literal.Number.Integer */
+.formattedcode .sr { color: purple } /* Literal.String.Regex */
+.formattedcode .s2 { color: purple } /* Literal.String.Double */
+.formattedcode .s1 { color: purple } /* Literal.String.Single */
+.formattedcode .sd { color: purple } /* Literal.String.Doc */
+.formattedcode .cs { color: #00aa33; font-weight: bold; font-style: italic } /* Comment.Special */
+.formattedcode .err { color: #cc0000; font-weight: bold; text-decoration: underline; } /* Error */
+
+/* css */
+.formattedcode .nt { font-weight: bold; } /* tag */
+.formattedcode .nc { color: #336; } /* class */
+.formattedcode .nf { color: #336; } /* id */
+.formattedcode .nd { color: #999; } /* :foo */
+.formattedcode .m { color: purple } /* number */
+.formattedcode .nb { color: purple } /* built-in */
+.formattedcode .cp { color: #bd3f00; } /* !important */
+
+/*----------------------------------------------------------------*/
+/* appinstance#docspage
+/*----------------------------------------------------------------*/
+div.appinstance#docspage div#docstopnote {
+   color: gray;
+   font-size: .9em;
+   margin: 1em 0;
+}
+div.appinstance#docspage div#docstopnote a {
+   color: #55c;
+   text-decoration: none;
+}
+div.appinstance#docspage div#docstopnote a:hover {
+   text-decoration: underline;
+}
+
+/*----------------------------------------------------------------*/
+/* appinstance#overviewpage
+/*----------------------------------------------------------------*/
+div.appinstance#overviewpage h2 {
+   color: #555;
+   border-bottom: 1px solid #555;
+   font-style: italic;
+   font-size: 1.4em;
+   font-weight: normal;
+   margin-bottom: 1em;
+}
+
+div.appinstance#overviewpage table {
+   /* border: 1px solid gray; */
+   margin-bottom: 2em;
+   margin-left: 25px;
+}
+
+div.appinstance#overviewpage td, div.appinstance#overviewpage th {
+   padding: 4px 8px;
+   border-bottom: 1px solid #ccc;
+   white-space: nowrap;
+   /* border: 1px solid gray; */
+}
+
+div.appinstance#overviewpage td.ptext {
+   white-space: normal !important;
+   border-bottom: 0;
+}
+
+div.appinstance#overviewpage td a { text-decoration: none; }
+div.appinstance#overviewpage td a:hover { text-decoration: underline; }
+
+div.appinstance#overviewpage table th {
+   text-align: right;
+   vertical-align: top;
+}
+
+div.appinstance#overviewpage table td ul {
+   margin-left: 2em;
+}
+
+/*----------------------------------------------------------------*/
+/* topnav, botnav, page
+/*----------------------------------------------------------------*/
+
+#topnav * {
+  margin: 0pt;
+  padding: 0pt;
+}
+
+#topnav_outer { background: #249 url(/img/june08/tn_back_top_v2.png) repeat-x top; }
+#topnav { background: url(/img/june08/tn_back_btm.png) repeat-x bottom;
+	padding: 0 10px; height: 40px; overflow: hidden; position: relative }
+
+#topnav ul { list-style-image:none; list-style-position:outside; list-style-type:none; }
+#topnav ul li { display: inline; }
+
+#topnav ul li#tn_logo a {
+  height: 0pt; /* hide text */
+  padding: 0; margin: 0; /* override other #topnav ul li a */
+  padding-top: 40px;
+  margin-right: 20px;
+  width: 164px;
+  background: url(/img/june08/tn_logo_v2.png) no-repeat left 4px;
+  border: 0;
+}
+
+#topnav ul li a {
+  display: block;
+  float: left;
+  color: white;
+  text-decoration: none;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 1px;
+  font-weight: normal;
+  margin: 0 1px;
+  overflow: hidden;
+  background-repeat: repeat-x;
+  background-position: center center;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  line-height: 15px;
+}
+
+#topnav ul li a span {
+    overflow: hidden;
+    display: block; height: 0px; padding-top: 36px; padding-left: 10px;
+    padding-right: 10px;
+    background-repeat: no-repeat;
+    background-position: center 10px;
+}
+
+#topnav ul li#tn_myapps a span {
+    background-image: url(/img/june08/tn_myapps.png); width: 68px; }
+#topnav ul li#tn_appdir a span {
+    background-image: url(/img/june08/tn_appdir.png); width: 119px; }
+#topnav ul li#tn_forum a span {
+    background-image: url(/img/june08/tn_forum.png); width: 54px; }
+#topnav ul li#tn_help a span {
+    background-image: url(/img/june08/tn_help.png); width: 38px; }
+#topnav ul li#tn_docs a span {
+    background-image: url(/img/june08/tn_docs.png); width: 39px; }
+
+#topnav ul li#tn_home a span {
+    background-image: url(/img/june08/tn_home.png); width: 17px; }
+
+#topnav ul li a:hover {
+    background-image: url(/img/june08/tn_back_halfhilite.png); }
+#topnav ul li a.selected {
+  background-image: url(/img/june08/tn_back_hilite.png);
+}
+#topnav ul li a span {
+  margin-left: 1px; margin-right: 1px;
+}
+#topnav ul li a.selected span {
+  margin-left: 0px; margin-right: 0px;
+  border-left: 1px solid #1c377b;
+  border-right: 1px solid #3c64cc;
+}
+
+#topnav #usernav {
+  padding: 13px 0;
+  text-align: right;
+}
+
+#topnav #usernav, #topnav #usernav a {
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 12px;
+  color: #fff;
+}
+
+#topnav #usernav a {
+  text-decoration: underline;
+  margin: 0 5px;
+}
+
+#topnav #usernav a:hover { color: #e93; }
+
+#botnav {
+   padding: 8px 20px;
+   color: #333;
+   font-family: Arial, sans-serif;
+   font-weight: normal;
+   font-size: 10px;
+   text-align: center;
+   border-top: 1px solid #999;
+   border-bottom: 1px solid #999;
+}
+
+#pagebody1 {
+   background-color: #fff;
+}
+
+#pagebody1.embide {
+   background-color: transparent;
+}
+
+.limwid #pagebody1 {
+   width: 800px;
+   margin-left: auto; margin-right: auto;
+   border-left: 1px solid #999;
+   border-right: 1px solid #999;
+}
+
+/* content inside limwidth pages get padding over left and right
+   gradients */
+div.lwcontent {
+   padding: 5px 20px;
+}
+
+/*----------------------------------------------------------------*/
+/* subnavtop */
+/*----------------------------------------------------------------*/
+div.subnavtop1 {
+   border-top: 1px solid #666;
+   border-bottom: 1px solid #666;
+   background-color: #dcdcdc;   
+   padding-left: 20px;
+}
+div.subnavtop2 {
+   padding-right: 20px;
+}
+div.subnavtop_inner {
+   border-left: 1px solid #999;
+}
+div.subnavtop_inner ul {
+   padding: 0;
+   margin: 0;
+}
+div.subnavtop_inner li.subnavtoptab {
+   list-style: none;
+   margin: 6px 0;
+   display: inline;
+   position: relative;
+   float: left;
+}
+
+div.subnavtop_inner li.subnavtoptab a {
+   z-index: 25 !important;
+   padding: 6px 12px !important;
+   border-right: 1px solid #999 !important;
+   text-decoration: none !important;
+   outline: none !important;
+   position: relative !important;
+   color: black !important;
+   font-weight: bold !important;
+}
+
+div.subnavtop_inner li.subnavtoptab a.selected {
+   background-color: white;
+/*   border-bottom: 1px solid white; */
+}
+
+div.subnavtop_inner li.subnavtoptab a:hover {
+   background-color: #eee;
+}
+
+div.subnavtop_inner li.subnavtoptab a.selected:hover {}
+
+/*----------------------------------------------------------------*/
+/****** My Apps */
+/*----------------------------------------------------------------*/
+
+.myapps #myappsheader h1 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   text-align: left;
+   font-size: 200%;
+   color: #333;
+   margin: 6px;
+   float: left;
+}
+
+.myapps #myappsheader .ajbutton {
+   float: right;
+   padding: 0px;
+   margin: 6px;
+   font-size: 120%;
+}
+
+.myapps #myappsheader .ajbutton a {
+   color: blue;
+}
+
+.myapps { font-size: 110%; }
+.myapps p {
+  text-align: center;
+  margin: 1em 0;
+  /*font-style: italic;*/
+  color: #333;
+}
+
+#myappsbody a { color: #2179c2; font-style: normal; }
+#myappsbody a:hover { text-decoration: underline; color: #C47827; }
+#myappstable .nametd a { /*font-weight: bold;*/ text-decoration: underline; }
+#myappstable .modtd { font-size: 80%; color: #999; }
+#myappstable a { border: 0; display: block; }
+#myappstable img { border: 0; display: inline; vertical-align: middle; }
+#myappstable td { padding: 0.4em 0.8em; border-top: 1px solid #bbb; }
+
+#myappsbody a.withicon img { padding-right: 5px; }
+#myappsbody a.withicon { text-decoration: none; }
+#myappsbody a.withicon span { text-decoration: underline; }
+
+#myappstable .evenrow td { background-color: #eee; }
+#myappstable .nametd { width: 260px; }
+#myappstable .edit { margin-right: 1em; }
+
+#myappstable {
+   clear: both;
+   margin-top: 1.5em;
+   margin-left: auto;
+   margin-right: auto;
+   margin-bottom: 20px;
+   border-bottom: 1px solid #bbb;
+   width: 100%
+}
+
+#myappstable .liveapp td { /*background-color: #eef;*/ }
+
+/****** My App Stats */
+#myappstatspage table {
+   font-size: 10px;
+   border-top: 1px solid #666;
+   border-left: 1px solid #666;
+}
+
+#myappstatspage table .oddrow td {
+   background-color: #eee;
+}
+
+#myappstatspage h4 {
+   text-align: center;
+   margin: 1em;
+   color: gray;
+}
+#myappstatspage table td, #myappstatspage table th {
+   margin: 0;
+   padding: 2px 4px;
+   white-space: normal;
+   border-right: 1px solid #666;
+   border-bottom: 1px solid #666;
+}
+#myappstatspage table a {
+   text-decoration: none;
+}
+#myappstatspage table a:hover {
+   text-decoration: underline;
+}
+
+/*----------------------------------------------------------------*/
+/* App Directory */
+/*----------------------------------------------------------------*/
+
+#directorypage {}
+#directorypage #directorypagecontent { padding-top: 0; }
+
+#directorypage h1 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   font-size: 200%;
+   color: #333;
+   margin: 6px;
+   margin-top: 0px;
+   padding-top: 12px;
+   padding-left: 20px;
+}
+#directorypage p.topblurb { margin: 1em 4em 2em 4em; color: #555; line-height: 150%; }
+#directorypage p.topblurb a { text-decoration: none; color: #00f; }
+#directorypage h4 {
+   text-align: center;
+   color: gray;
+   margin: 2em 0;
+}
+#directorypage .dirbox { border: 1px solid #ccc; margin: 10px 0; }
+#directorypage .dirbox .dirboxheader { background-color: #FFF3E0; padding: 5px; }
+#directorypage .dirbox .dirtitle { font-size: 120%; }
+#directorypage .dirbox .dirtitle a.appname {
+   font-weight: bold;
+   text-decoration: none;
+   font-family: "Trebuchet MS", Arial, sans-serif;
+}
+#directorypage .dirbox .dirtitle a.author {
+   font-weight: normal;
+   text-decoration: none;
+   color: #2179c2;
+}
+#directorypage .dirbox .dirtitle a:hover {
+   color: #900;
+   text-decoration: underline;
+}
+#directorypage .dirbox .dirboxheader .lastupdate {
+   float: right;
+   color: #555;
+   font-style: italic;
+   font-size: 76%;
+}
+#directorypage .dirbox .dirstats {
+   float: left;
+   width: 160px;
+   padding: 2px;
+   margin-right: 1px;
+}
+
+#directorypage .dirbox .dirstats a { text-decoration: none; color: #3333aa; display: block; }
+#directorypage .dirbox .dirstats a:hover { color: orange; text-decoration: underline; }
+#directorypage .dirbox .dirstats a.exciting { color: #0000ff; }
+#directorypage .dirbox .dirstats .statnum { float: left; width: 40px; text-align: right; }
+#directorypage .dirbox .dirstats .statlabel { float: left; width: 100px; text-align: left; padding-left: 4px;}
+
+#directorypage .dirbox .dirabout {
+   font-size: 90%;
+   padding: 5px;
+   float: left;
+   width: 520px;
+}
+
+#directorypage .sortby {
+/*   font-size: 76%; */
+   border-bottom: 1px solid #ccc;
+   margin: 16px 20px 0px 20px;
+   padding: 2px 4px;
+   font-style: italic;
+   color: gray;
+}
+
+#directorypage .sortby a { text-decoration: none; font-style: normal; }
+#directorypage .sortby a:hover { text-decoration: underline; }
+
+#directorypage .sortby a.selected {
+   color: black;
+   font-weight: bold;
+}
+
+#directorypage .pagenav {
+   text-align: right;
+/*   font-size: 76%; */
+   margin-bottom: 16px;
+}
+#directorypage .pagenav a {
+   text-decoration: none;
+}
+
+/******* Docs */
+
+#docmain h1 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   text-align: left;
+   font-size: 200%;
+   color: #333;
+   margin-top: 10px;
+   margin-bottom: 10px;
+}
+
+#docmain p { margin: 0.8em 0; }
+
+#docmain .docmainlink {
+  width: 100%;
+  float: left;
+  border-top: 1px solid #ccc;
+  padding-top: 1.2em;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+#docmain .docmainlink p { margin: 0; margin-bottom: 0.5em; font-size: 1.3em;
+			  color: #555; line-height: 120%; }
+#docmain .docmainlink h3 { float: left; font-size: 18px; display: block;
+			   width: 350px; text-align: right; }
+#docmain .docmainlink div { margin-left: 380px; }
+
+/* faqpage */
+#faqpage ul {
+   margin: 2em 0;
+}
+#faqpage li.topquestion {
+   font-size: 120%;
+   margin: .5em 2em;
+   padding: 0;
+}
+#faqpage hr {
+  /* supposed to be cross-browser centered 1px line */
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 1px;
+  background-color: #999;
+  color: #999;
+  border: none;
+  padding: 0;
+}
+#faqpage h2 {
+   font-size: 120%;
+   color: #333;
+   border-bottom: 1px solid #ccc;
+   margin: 2em 2em 1em 2em;
+}
+#faqpage .answer {
+   margin: 1em 6em;
+}
+#faqpage p {
+   font-size: 1.1em;
+   margin: 1em 0;
+}
+#faqpage .answer ul {
+   margin-left: 2em;
+}
+#faqpage .answer ul li {
+   margin: 1em 0;
+}
+#faqpage pre {
+   padding: 1em;
+   font-size: 12px;
+   font-family: monospace;
+   border: 1px solid #ddd;
+}
+
+#docmainlinks { margin-bottom: 2em; }
+
+#devguide { line-height: 140%; padding-top: 16px; }
+
+#devguide div.formattedcode {
+   font-size: 12px;
+   font-family: monospace;
+   white-space: nowrap;
+   line-height: 16px;
+   border: 1px solid #aaa;
+   padding: 1.0em;
+   overflow: auto;
+   position: relative; /* ie fix */
+}
+
+/* "#devguide *" was behaving badly -- it not only strips browser defaults,
+   it also strips margin and padding we define globally (like in .formattedcode)
+*/
+#devguide ul, #devguide ol, #devguide li, #devguide p, #devguide h1,
+#devguide h2, #devguide h3, #devguide h4, #devguide h5, #devguide h6,
+#devguide blockquote, #devguide pre, #devguide table {
+    margin: 0; padding: 0;
+}
+
+#devguide h1 {
+  padding: 0.4em;
+  border-bottom: 1px solid #999;
+  border-top: 1px solid #999;
+  background-color: #eee;
+  margin-left: 0.3em;
+}
+
+#devguide h2 {
+  /* border-top: 1px solid #999; */
+  padding-top: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+#devguide h3 { margin: 1.5em 0 1em 0.5em; }
+
+#devguide h4 {
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+  font-size: 100%;
+  font-style: italic;
+}
+
+#devguide p { margin: 0 1em; }
+
+/*#devguide a { color: #2179c2; }
+#devguide a:hover { color: #C47827; }*/
+
+#devguide .codeblock {
+   font-size: 1.2em;
+   margin-left: 3em;
+   margin-right: 3em;
+   padding: 0.5em;
+   background-color: #eee;
+   border: 1px solid black;
+}
+
+#devguide ul { padding-left: 2em; }
+
+#devguide p, #devguide li { margin: 1em 0 1em 1em; }
+
+#devguide code {
+   font-family: monospace;
+   color: black;
+}
+
+#devguide p code, #devguide h2 code {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+  padding: 2px;
+  background-color: #eee;
+  font-size: 115%;
+}
+
+#devguide table.overview {
+   /*border: 1px solid black;*/
+    margin-top: 1em;
+}
+
+#devguide table.overview td {
+   padding: 0.5em 1.0em;
+}
+
+#devguide table#browsersupport { border: 1px solid #ccc; }
+#devguide table#browsersupport td, #devguide table#browsersupport th {
+   padding: 0.5em 1.0em;
+   border: 1px solid #ccc;
+}
+
+
+#devguide .docintrolink h3 {
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+/*------------ manual ------------*/
+
+#devguide .guideexample {
+    margin: 11px; } /* don't mix px and ems, or border around box will disappear */
+
+#devguide .guideexample .formattedcode {
+    background: #f8f8f8; margin: 0; }
+
+#devguide .guideexample .manexlinks {
+    border: 0; padding: 0; font-size: 90%; text-align: right; }
+
+#devguide .guideexample .runlink {
+    background: url(/img/docman_run.gif) no-repeat center left;
+    padding-left: 14px; }
+
+#devguide .guideexample .clonelink {
+    background: url(/img/docman_clone.gif) no-repeat center left;
+    padding-left: 14px; padding-right: 1em; }
+
+#devguide .leadin, #devguide .explainedlinks .expl { font-style: italic; color: #333;  }    
+
+#devguide ul.explainedlinks { margin-left: 1em; }
+#devguide .explainedlinks p { margin: 0.5em 0; }
+#devguide .explainedlinks li { margin: 1em 0; }
+
+/*------------ devguidebody & devguidenav ----------------*/
+
+#devguide #devguidebody {
+   margin-left: 200px;
+   padding-left: 10px;
+   padding-right: 10px;
+   border-left: 1px solid #ccc;
+}
+
+#devguide #devguidenav {
+   float: left;
+   width: 190px;
+   color: black;
+   padding: 1em 0;
+   padding-right: 10px;
+   border-right: 1px solid #ccc;
+}
+
+#devguidenav a { color: #00f; text-decoration: underline; }
+#devguidenav a:hover { color: #C47827; text-decoration: underline; }
+   
+#devguidenav a.selected {
+  text-decoration: none;
+  color: #000;
+}
+
+#devguidenav h1 {
+  border: 0; padding: 0; background: none; margin: 0;
+  font-size: 140%;
+  font-style: italic;
+  font-weight: bold;
+  color: #888;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  line-height: 120%;
+}
+
+#devguidenav h2 {
+   border: 0;
+   padding: 0;
+   background: none;
+   font-size: 110%;
+   margin: 0.8em 0.5em;
+}
+
+#devguidenav h1 a, #devguidenav h1 a:hover {
+  color: inherit; text-decoration: inherit;
+}
+
+#devguidenav h2 a { text-decoration: none; }
+
+#devguidenav ul {
+   list-style: disc;
+   /* list-style: none; */
+   /* clear: both; */
+}
+
+#devguidenav ul, #devguidenav li {
+   /*
+  margin: 0;
+  padding: 0;
+*/
+}
+
+#devguidenav li {
+   display: block;
+   margin: 0.4em 0.6em;
+   margin-left: 1em;
+}
+
+#devguidenav li a { text-decoration: none; }
+
+/*----------------------------------------------------------------*/
+/* myaccountpage header */
+
+div.myaccountpage div.accountheader h1 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   text-align: left;
+   font-size: 220%;
+   color: #333;
+   margin: 12px 28px;
+   float: left;
+}
+
+/*------------------- accountprofile ----------------------*/
+
+div.accountprofile {
+   font-size: 120%;
+   width: 500px;
+   margin-left: auto;
+   margin-right: auto;
+   padding-top: 20px;
+   padding-bottom: 20px;
+}
+
+.accountprofile td { padding: 0.5em; }
+
+.accountprofile h3 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   color: #333;
+   text-align: left;
+   border-bottom: 1px solid #ccc;
+   margin: 1.0em 0;
+}
+
+.accountprofile #emailnote {
+   font-size: 75%;
+   color: gray;
+}
+.accountprofile p { margin-top: 1.0em; }
+.accountprofile div#publicprof { padding-left: 2.0em; }
+.accountprofile #updateppbutton { text-align: right; padding-right: 2.0em; }
+.accountprofile a.selected { text-decoration: none; color: black; }
+.accountprofile div#myappselect { padding-left: 1.5em; }
+#accountpublicprofile textarea { margin-left: 1.5em; }
+
+/*----------------------------------------------------------------*/
+/* account stuff */
+
+
+div#accountpage {}
+
+#accountpage div#idesignup {
+   border: 1px solid #9c9;
+   padding: 1.25em;
+}
+
+#accountpage div#normalsignup {
+   padding: 1.25em;
+}
+
+#accountpage div#idesignuphead {
+   font-size: 150%;
+}
+
+#accountpage p#accountbetanote {
+   color: #888;
+}
+
+#accountpage div.tableform {
+   width: 300px;
+   margin-top: 2.0em;
+   margin-right: auto;
+   margin-bottom: 2.0em;
+   margin-left: auto;
+}
+#accountpage div.tableform div.tableform_title {
+   font-size: 1.6em;
+   font-weight: bold;
+   width: 100%;
+   text-align: left;
+   border-bottom: 1px solid #ccc;
+   margin-bottom: 1.0em;
+}
+#accountpage div.tableform div#inputs {
+   width: 300px;
+   margin-left: auto;
+   margin-right: auto;
+}
+#accountpage div.tableform label, #accountpage div.tableform input.text {
+   display: block;
+   width: 100%;
+   text-align: left;
+   font-size: 1.2em;
+}
+#accountpage div.tableform input.text {
+   margin-bottom: 1.0em;
+   border: 1px solid #8faec6;
+}
+#accountpage div.tableform label { color: #222; }
+#accountpage div.tableform label.checklabel {
+   display: inline;
+   font-size: 1.0em;
+}
+#accountpage div.tableform input.tableform_submit {
+   margin-top: 1.0em;
+   display: block;
+   font-size: 1.0em;
+   padding: 0.1em;
+   margin-left: auto;
+   margin-right: auto;
+   width: 100%;
+}
+#accountpage div.formerror { width: 100%; }
+
+/*----------------------------------------------------------------*/
+/* help page */
+
+#helppage { padding: 1em 2.5em; }
+#helppage h2 { font-size: 1.8em; border-bottom: 1px solid #ccc; margin-top: 1.0em; }
+
+#helppage p { line-height: 200%; margin: 1.0em; }
+
+#helppage ul { margin-left: 3.0em; }
+#helppage ul li { line-height: 200%; }
+
+#helppage form#feedback { margin-left: 3.0em; width: 400px; }
+#helppage form#feedback textarea { display: block; width: 100%; }
+#helppage form#feedback input { display: block; width: 100%; padding: 0.2em; }
+
+/*----------------------------------------------------------------*/
+/* sessionmessage */
+
+div.sessionmessage {
+   width: 66%;
+   background: #F7F4D4;
+   border: 1px solid #807B4D;
+   padding: 1.4em;
+   margin-left: auto;
+   margin-right: auto;
+   margin-top: 0em;
+   margin-bottom: 1.0em;
+   text-align: center;
+}
+
+/*----------------------------------------------------------------*/
+/* adminpage */
+
+div.adminpage {
+   padding: 3.0em;   
+}
+
+div.adminpage table#usertable td {
+   border: 1px solid #ddd;
+   padding: 4px;
+   margin: 0;
+}
+
+table.greptable {
+   margin: 12px 4px;
+   white-space: nowrap;
+   font-family: monospace;
+   font-size: 7pt;
+}
+table.greptable td { padding: 0 4px; }
+
+/*----------------------------------------------------------------*/
+/* user pages */
+
+#userheader {
+   padding: 1em;
+}
+#userheader h1 {
+   font-family: "Trebuchet MS", Arial, sans-serif;
+   font-weight: bold;
+   text-align: left;
+   font-size: 200%;
+   color: #333;
+   margin: 6px;
+   float: left;
+}
+#userheader #username {
+   font-weight: normal; color: #383;
+}
+#userheader #membersince {
+   font-style: italic;
+   margin-left: 8px;
+   color: #333;
+}
+#userheader .simpletabgroup { }
+#userheader hr { margin: 1.5em 0 0 .5em; }
+
+#usertopnav {
+   text-align: center;
+}
+
+#userprofile #aboutappframe {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   width: 750px;
+   height: 500px;
+   border: 0;
+   overflow: auto;
+}
+
+#userapps {
+   padding: 1em;
+}
+
+/*----------------------------------------------------------------*/
+/* simpletabgroup */
+
+.simpletabgroup a.selected { text-decoration: none; color: black; }
+
+/*----------------------------------------------------------------*/
+/* embedded ide */
+
+.embide div#appjet_code_window { border-right: 0; }
+
+.embide #toolbar {
+   width: 100%;
+   height: 16px;
+   text-align: right;
+   text-align: center;
+   overflow: hidden;
+   margin: 0; padding: 0;
+}
+
+.embide #maintable {
+   width: 100%;
+   position: relative; /* ie hasLayout fix */
+   border-right: 1px solid black;
+   margin: 0; padding: 0;
+}
+
+.embide #embidefooter {
+   height: 16px;
+   margin: 0; padding: 0;
+   overflow: hidden;
+   text-align: right;
+   width: 100%;
+}
+
+.embide #maintable td {
+   vertical-align: top;
+   background: #fff;
+}
+
+.embide #maintable td p {
+   padding: 1em;
+}
+
+.embide a.runlink {
+   display: none;
+   margin: 0;
+   padding: 0;
+/*   Background: url(/img/ltp/run-again-button.gif) no-repeat center left; */
+/*   padding-left: 14px; */
+/*   width: 70px; */
+}
+
+.embide a.runlink img {
+   border: 0;
+}
+
+.embide .savelink {
+   background: url(/img/docman_clone.gif) no-repeat center left;
+   padding-left: 14px; padding-right: 1em;
+}
+
+.embideclonelink {
+   background: url(/img/docman_clone.gif) no-repeat center left;
+   padding-left: 14px;
+   margin-right: 6px;
+}
+
+.embidefooterlink {
+   font-size: 10px;
+   text-decoration: none;
+}
+
+.embide #reloadarrow {
+   padding-top: 10px;
+   text-align: center;
+}
+
+.embide #reloadlabel {
+   text-align: center;
+}
+
+.embide #emptypreview {
+   width: 100%;
+   border: 1px solid black;
+   border-right: 0;
+   cursor: pointer;
+   text-align: left;
+}
+
+.embide #bigarrowwrapper {
+   float: left;
+   width: 100%;
+}
+
+.embide #previewframe {
+   width: 100%;
+   border: 1px solid black;
+   border-right: 0;
+}
+
+.embide .previewnavwrapper {
+   width: 100%;
+   border-left: 1px solid black;
+   border-top: 1px solid black;
+   border-bottom: 1px solid #ccc;
+   border-right: 0;
+   height: 18px;
+   font-size: 10px;
+   font-style: italic;
+   color: #444;
+}
+
+.embide .previewnavlabel {
+   position: relative;
+   top: 2px;
+   padding-left: 2px;
+}
+
+.embide input.previewnav {
+   height: 12px;
+   font-size: 10px;
+   font-style: normal;
+   color: #004;
+   width: 99%;
+/*   border: 1px solid #99a; */
+   padding: 0;
+}
+
+/*----------------------------------------------------------------
+ * comments
+ *----------------------------------------------------------------*/
+#commentstree .comment {
+   background: #fff;
+   border: 1px solid #ccc;
+   margin: 1em 0;
+   padding: 0.45em;
+}
+
+#commentstree .topic {
+}
+
+#commentstree .response {
+    margin-left: 6em;
+}
+#commentstree .comment .header {
+   font-size: 90%;
+   color: #999;
+   padding: 2px;
+   border-bottom: 0;
+}
+#commentstree .ownercomment .content { padding: 1px; }
+#commentstree .comment .header .author {
+   float: left;
+}
+#commentstree .content {
+   /*border: 1px solid #ddd;*/
+}
+#commentstree .comment .header .author a {
+   text-decoration: none;
+   font-weight: bold;
+}
+#commentstree .comment .header .author a:hover {
+   text-decoration: underline;
+}
+#commentstree .comment .header .date {
+   font-style: italic;
+   float: right;
+}
+#commentstree .comment .subject {
+   font-weight: bold;
+   margin: 1em;
+}
+#commentstree .comment .body {
+   margin: 1em;
+}
+#commentstree .comment .bottomlinks {
+   text-align: left;
+   padding: 3px;
+   font-size: 90%;
+}
+#commentstree .comment .bottomlinks a {
+   text-decoration: underline;
+   color: #55c;
+}
+#commentstree .comment .bottomlinks a:hover {
+   text-decoration: underline;
+   color: red;
+}
+#commentstree .comment .admin {
+   text-align: right;
+   text-decoration: none;
+}
+#commentstree .ownercomment { /* OWNER COMMENT COLOR */
+   background: #fff3e0;
+   border: 1px solid #cccc99;
+}
+/*  ------------------------ */
+/*  ---- comments input ---- */
+/*  ------------------------ */
+.commentspage #toplinks {
+   margin: 1.5em 0;
+   font-size: 1.2em;
+}
+.commentspage .heading {
+   margin-top: 1em;
+   margin-bottom: 1em;;
+   font-size: 1.2em;
+   font-weight: bold;
+   font-style: italic;
+   padding: 0;
+}
+.commentspage .commentsinput { /* COMMENT INPUT FORM */
+   border: 1px solid #696;
+   padding: 1em;
+   background-color: #e3f0dd;
+}
+.commentspage .submittedok {
+   background: #e3ffcc;
+}
+.commentspage .errmessage {
+   color: red;
+   font-weight: bold;
+}
+.commentspage .signin {
+   font-size: 1.1em;
+   background: #e3ffcc;
+}
+.commentspage .inlineresponse {
+   margin-left: 6em;
+}
+.commentspage .commentsinput label {
+   display: block;
+   color: #222;
+   margin-top: 4px;
+   margin-bottom: 1px;
+}
+.commentspage .commentsinput .inputsubject {
+   width: 99%;
+}
+.commentspage .commentsinput .inputbody {
+   width: 99%;
+   height: 100px;
+   margin-bottom: 5px;
+}
+.commentspage .commentsinput .submitnote {
+   color: #333;
+   margin: 0.5em;
+}
+
+/*----------------------------------------------------------------*/
+
+div#google_conversion_tracker {
+   position: relative;
+}
+
+div#google_conversion_tracker_obscurer {
+   position: absolute;
+   top: 0;
+   width: 100%;
+   background-color: #fff;
+   z-index: 999;
+   height: 22px;
+}
+
+/*----------------------------------------------------------------*/
+/* socialsites */
+/*----------------------------------------------------------------*/
+div#socialbuttonscontainer {
+   margin-left: 220px;
+}
+div.socialbutton {
+   padding-left: 6px;
+   padding-right: 6px;
+}
+div.socialbutton a {
+   font-size: 0.8em;
+   text-decoration: none;
+}
+
+div#facebookbutton { padding-top: 5px; }
+div#deliciousbutton { padding-top: 5px; }
+div#stumbleuponbutton { padding-top: 10px; }
+
+/* -- hacks -- */
+
+/* Only seen by IE, this rule fixes browser bug where divs containing
+   floats have their size calculated quite wrongly ("escaping floats" bug). */
+* html .floatbox {zoom: 1}
+/* ... and other issues: */
+* html .hasLayout {zoom: 1}
+
+/*----------------------------------------------------------------*/
+/* ide multiselect */
+/*----------------------------------------------------------------*/
+.multiSelect {
+   width: 16px;
+   background: #FFF url(/img/jqueryMultiSelect/dropdown.gif) left 8px no-repeat;
+   display: inline;
+   padding: 6px 8px;
+}
+.multiSelect.hover { background: url(/img/jqueryMultiSelect/dropdown_hover.gif) left 8px no-repeat; }
+.multiSelect.active, .multiSelect.focus { border: 0; }
+.multiSelect.active { background: url(/img/jqueryMultiSelect/dropdown_active.gif) left 8px no-repeat; }
+.multiSelectOptions {
+   width: 206px;
+   max-height: 150px;
+   margin-top: -1px;
+   overflow: auto;
+   border: solid 1px #000;
+   background: #FFF;
+}
+.multiSelectOptions LABEL {
+   padding: 2px 5px;
+   display: block;
+   color: gray;
+}
+.multiSelectOptions LABEL.checked { color: black; }
+.multiSelectOptions LABEL.selectAll { border-bottom: dotted 1px #CCC; }
+.multiSelectOptions LABEL.hover { background: #dfd; }
+.multiSelectOptions label input { margin-right: 4px; position: relative; top: 2px; outline: none; }
+

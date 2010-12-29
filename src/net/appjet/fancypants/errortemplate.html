@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC
+          "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>AppJet Error</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="en-us" />
+  <script type="text/javascript" src="http://appjet.com/js/343607636acfee88faa2b638330a3370/jquery-1.2.6.js"></script>
+  <script type="text/javascript">
+function toggleFrameView(frameId) {
+  var hidden = $("#frame"+frameId+":hidden")
+  var visible = $("#frame"+frameId+":visible")
+  if (hidden.length > 0) {
+    hidden.show("normal")
+    $("#image"+frameId).attr("src", "http://appjet.com/img/close-arrow.png")
+  } else {
+    visible.hide("normal")
+    $("#image"+frameId).attr("src", "http://appjet.com/img/open-arrow.png")
+  }
+}
+
+function toggleErrorView() {
+  var hidden = $("#hiddentrace:hidden");
+  var visible = $("#hiddentrace:visible");
+  if (hidden.length > 0) {
+    hidden.slideDown("normal");
+  } else {
+    visible.slideUp("normal");
+  }
+  return false;
+}
+
+function load() {
+  $(".zippy").attr("src", "http://appjet.com/img/open-arrow.png")
+}
+</script>
+<style>
+body {
+  font-family: verdana, helvetica, sans-serif;
+  font-size: 60%;
+  margin: 1em;
+}
+#header { border-bottom: 1px solid red; margin-bottom: 0.8em; }
+#errortitle { font-weight: bold; font-size: 1.6em; margin-bottom: 0.76em;}
+#errormessage { font-size: 1.4em; margin-bottom: 1.0em}
+#errorexplanation {
+  background-color: #ffd; margin: 1em; padding: 0 1em;
+  border: 1px solid #cc9;
+  line-height: 150%;
+}
+#errorexplanation ul, #errorexplanation li { margin: 0; padding: 0; }
+#errorexplanation ul { padding-left: 2em; }
+#errorexplanation { font-size: 9pt; }
+#errorexplanation code { font-size: 10pt; }
+#errorexplanation code { padding: 1px; background: #ddc; margin: 0 5px;
+    white-space:nowrap; }
+#errorexplanation code.quote { background: #fcc; }
+#errorexplanation p, #errorexplanation li { margin: 1em 0 }
+#frame0 { margin-top: 2.0em; }
+.errorframe {
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+  cursor: pointer;
+  color: blue;
+}
+.errordetail {
+  text-decoration: underline;
+}
+.errorframe:hover {
+  color: #c47827;
+}
+.sourceline {
+  font-size: 1.4em;
+  color: black;
+  font-family: monospace;
+}
+#statuscode {
+  float: right;
+  font-size: 2.4em;
+  font-weight: bold;
+}
+.codecontext {
+  border: 1px solid black;
+  font-family: monospace;
+  font-size: 1.4em;
+}
+.codecontext td { padding: 0.1em 0.3em; }
+.codecontext .linecell { border-right: 1px solid #888; }
+.codecontext .offendingline { background-color: #ffcccc; }
+.errotemplate .codecontext .linecell { border-right: 1px solid black; }
+pre {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+
+#errorexplanation tt { font-size: 85%; color: #666; }
+</style>
+</head>
+<body onload="load()">
+%error_markup_here%
+</body>
+</html>

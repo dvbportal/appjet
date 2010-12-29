@@ -1,0 +1,391 @@
+<!DOCTYPE HTML PUBLIC
+          "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <title>AppJet Dashboard for %appname%</title>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Language" content="en-us" />
+  <script type="text/javascript" src="%frontendhost%/js/343607636acfee88faa2b638330a3370/jquery-1.2.6.js"></script>
+  <script type="text/javascript" src="%frontendhost%/js/0/datejs/date%locale%.js"></script>
+
+<script type="text/javascript">
+var logViewKeys = {"latestFirst": Boolean, "dateFilter": Number, "idFilter": String, "typeFilter": Number, "severityFilter": Number};
+var logView = {start: 0, count: 100, latestFirst: true,
+               dateFilter: -1, idFilter: "", typeFilter: 7, severityFilter: 4};
+
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
+
+function parseCookies() {
+  $.each(logViewKeys, function(i, val) {
+    c = readCookie(i);
+    if (c != null) {
+      if (val == Boolean)
+        logView[i] = (c == "true")
+      else
+        logView[i] = val(c);
+    }
+  });
+}
+
+function setLogView(key, value) {
+  if (logViewKeys[key]) {
+    logView[key] = value;
+    logView.start = 0;
+    createCookie(key, value, 3650);
+  } else {
+    throw new Error("Bad Cookie!");
+  }
+}
+
+var loadHasRun = false;
+
+function load() {
+  if (loadHasRun) return;
+  loadHasRun = true;
+  parseCookies();
+  $('#logbuffer').empty();
+  var t = $('<TABLE cellpadding=0 border=0 cellspacing=0 id="logtable"></TABLE>');
+  
+  // date filter
+  var ss = 'selected="selected"';
+  var f = $('<TR class="filter" />').append($('<TH>Show&nbsp;last </TH>')
+  .append($('<SELECT><OPTION '+(logView.dateFilter == 0 ? ss : "")+' value=0>Hour</OPTION>'+
+                    '<OPTION '+(logView.dateFilter == 1 ? ss : "")+' value=1>Day</OPTION>'+
+                    '<OPTION '+(logView.dateFilter == 2 ? ss : "")+' value=2>Week</OPTION>'+
+                    '<OPTION '+(logView.dateFilter == -1 ? ss : "")+' value=-1>all</OPTION></SELECT>')
+  .change(function() {
+    var v = $(this).children(":selected").val();
+    setLogView("dateFilter", v);
+    reloadLog();
+  })));
+
+  // messages / reload
+  var i = $('<INPUT type="submit" name="Refresh" value="Refresh" id="refreshbutton" />').click(reloadLog).css("width", "100%");
+  var tr = $('<TR />').append($('<TD colspan=5 style="border-bottom: 0;" />').append(i));
+  t.append(tr);
+  f.append($('<TH>&nbsp;</TH>'));
+
+  // severity filter
+  var sevlist = $('<TH class="severity" />');
+  var sevs = [ "FATAL", "&ge; ERROR", "&ge; WARN", "&ge; INFO", "all"];
+  var sel = $('<SELECT />');
+  $.each(sevs, function(i, val) {
+    sel.append($('<OPTION '+(logView.severityFilter == i ? ss : "")+'value='+i+'>'+val+'</OPTION>'));
+  });
+  sel.change(function() {
+    setLogView("severityFilter", $(this).val());
+    reloadLog();
+  });
+  sevlist.append(sel);
+  f.append(sevlist);
+
+  // request type filter
+  var cc = 'checked="checked"';
+  var boxen = $('<TH class="requestType" />').css({"text-align": "left", "white-space": "nowrap"});
+  var boxValues = ["Preview", "Published", "Shell"]
+  $.each(boxValues, function(i, val) {
+    boxen.append($('<INPUT type="checkbox" '+
+      (logView.typeFilter & Math.pow(2, i) ? cc : "")+' />').click(function() {
+        if ($(this).attr("checked"))
+          setLogView("typeFilter", logView.typeFilter | Math.pow(2, i));
+        else
+          setLogView("typeFilter", logView.typeFilter & (Math.pow(2, boxValues.length)-1-Math.pow(2, i)));
+        reloadLog();
+      }));
+    boxen.append('&nbsp;'+val);
+    boxen.append($('<BR />'));  
+  });
+  f.append(boxen);
+
+  // id filter
+  f.append($('<TH class="requestId"/>').append($('<INPUT type="text" size=3 />').change(function() {
+    setLogView("idFilter", $(this).val());
+    reloadLog();
+  }).val(logView.idFilter)));
+  
+  t.append(f);
+  t.append($('<TR class="head"><TH class="date" id="datehead"><span class="link">Date</span><span class="temp">&nbsp;&#x2191;</span></TH><TH class="message">Message</TH><TH class="severity">Severity</TH><TH class="requestType">Type</TH><TH class="requestId">ID</TH></TR>'));
+
+  $('#logbuffer').append(t);
+  
+  $('#logtable').append($('<TR class="temp"><TD class="message" style="border-bottom: 0;">Loading...</TD><TD style="border-bottom: 0;" colspan=4>&nbsp;</TD></TR>'));
+  $('#datehead').click(function() {
+    setLogView("latestFirst", !logView.latestFirst);
+    reloadLog();
+  });
+
+  reloadLog();
+}
+
+function reloadLog() {
+  $("#refreshbutton").attr("disabled", "disabled").val("Loading...");
+  $.get("log", 
+        logView,
+        function(data, textStatus) {
+          $("#refreshbutton").attr("disabled", null).val("Refresh");
+          var inner = $('#logbuffer');
+          var t = $('#logtable');
+          $('.temp').remove();
+          if (logView.latestFirst)
+            $('#datehead').append('<span class="temp">&nbsp;&#x2191;</span>');
+          else
+            $('#datehead').append('<span class="temp">&nbsp;&#x2193;</span>');
+          if (typeof(data) != "object" || ! data.messages) {
+            t.append($('<TR class="temp"><TD style="text-align: left" colspan=5><font color="red">Error loading log data!</font></TD></TR>'));
+          } else if (data.messages.length == 0) {
+            t.append($('<TR class="temp"><TD colspan=5 style="text-align: center; border-bottom: 0;"><font color="green">No matching messages (of '+data.totalCount+' total).'+(data.totalCount > 0 ? '<BR>Try changing the filters above?' : '')+'</font></TD></TR>'));
+          } else {
+            var keys = ['date', 'time', 'message', 'severity', 'requestType', 'requestId'];
+            var sevs = ['FATAL', 'ERROR', 'WARN', 'INFO'];
+            var lastDate = "";
+            $.each(data.messages, function(i, msg) {
+              var tr = $('<TR class="temp severity'+(msg.severity < 4 ? msg.severity : 4)+'" />');
+              $.each(keys, function() {
+                var content = String(msg[this]);
+                var td = $('<TD class='+this+' />');
+                if (this == "date") {
+                  content = (new Date(msg.date)).toString(Date.CultureInfo ? Date.CultureInfo.formatPatterns.longDate : "M/d/yyyy");
+                  if (content != lastDate) {
+                    lastDate = content;
+                    t.append($('<TR class="temp"><TD class="date" colspan=5>'+content+'</TD></TR>'));
+                  }
+                  return;
+                } else if (this == "time") {
+                  content = (new Date(msg.date)).toString("HH:mm:ss");
+                } else if (this == "severity" && msg.severity < 4) {
+                  content = sevs[msg.severity];
+                } else if (this == "message") {
+                  var snippetSpan = $('<span />');
+                  var etcSpan = $('<span>&hellip;</span>');
+                  var restSpan = $('<span />');
+                  var moreLink = $('<span class="fakelink" style="display: block;">More&hellip;</span>');
+                  var snippet = "";
+                  var rest = content;
+                  var firstNewline = content.indexOf("\n");
+                  var mlw = 80; // max line width
+                  if (firstNewline == -1 || firstNewline > mlw) {
+                    snippet = content.substring(0, mlw);
+                  } else {
+                    secondNewline = content.indexOf("\n", firstNewline+1);
+                    if (secondNewline == -1 || secondNewline > firstNewline+mlw) {
+                      snippet = content.substring(0, firstNewline+mlw);
+                    } else {
+                      snippet = content.substring(0, secondNewline);
+                    }
+                  }
+                  if (snippet.length < content.length) {
+                    snippetSpan.append(snippet);
+                    snippetSpan.addClass('fakelink');
+                    snippetSpan.css("font-style", "normal");
+                    restSpan.append(rest);
+                    var showing = false;
+                    var expandFunction = function() {
+                      showing = !showing;
+                      if (!showing)
+                        restSpan.css("display", "block");
+                      etcSpan.toggle();
+                      snippetSpan.toggle();
+                      restSpan.toggle(); //"fast", function() { if (showing) restSpan.css("display", "inline") });
+                      moreLink.toggle(); //"fast");
+                    }
+                    snippetSpan.click(expandFunction);
+                    restSpan.click(expandFunction);
+                    etcSpan.click(expandFunction);
+                    moreLink.click(expandFunction);
+                    td.append(snippetSpan);
+                    td.append(etcSpan);
+                    restSpan.css("display", "none");
+                    td.append(restSpan);
+                    content = moreLink;
+                  }
+                }
+                td.append(content);
+                tr.append(td);
+              });
+              t.append(tr);
+            })
+            if (logView.start + logView.count < data.filterCount) {
+              inner.append($('<div class="rightlink fakelink temp"><a>'+
+                                       (logView.latestFirst ? "Older" : "Newer")+
+                                       ' &raquo;</a></div>').click(function() {
+                logView.start += logView.count;
+                reloadLog();
+              }));
+            }
+            if (logView.start > 0) {
+              inner.append($('<div class="leftlink fakelink temp"><a>&laquo; '+
+                                       (logView.latestFirst ? "Newer" : "Older")+
+                                       '</a></div>').click(function() {
+                logView.start -= logView.count ;
+                reloadLog();
+              }));
+            }
+            inner.append($('<div class="temp center">Showing '+
+                           (logView.start == 0 && data.filterCount == data.messages.length
+                            ? 'all'
+                            : (logView.start+1)+"-"+(logView.start+data.messages.length)+' of')+
+                           ' '+data.filterCount+' matching message'+(data.filterCount != 1 ? "s" : "")+
+                           ' (of '+data.totalCount+' total).</div>'));
+          }
+        },
+        'json');
+}
+
+$(load);
+</script>
+<style>
+body {
+  font-family: verdana, helvetica, sans-serif;
+  font-size: 76%;
+  margin: 1em;
+}
+pre {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+#logbuffer {
+  width: 100%;
+}
+#logtable {
+  width: 100%;
+  margin-bottom: 3px;
+}
+#logtable > tbody > TR {
+  vertical-align: top;
+}
+#logtable > tbody > TR.filter {
+  vertical-align: middle;
+}
+#logtable > tbody > TR.head {
+  background: #f3f3f3;
+}
+#logtable > tbody > TR > TD, #logtable > tbody > TR > TH {
+  border-bottom: 1px solid #bbb;
+  padding: 0.5em;
+  margin: 0;
+  text-align: center;
+}
+#logtable > tbody > TR > TD.message {
+  text-align: left;
+}
+#logtable > tbody > TR > TD.date {
+  text-align: left;
+  font-size: 80%;
+  font-style: italic;
+  color: gray;
+}
+#logtable > tbody > TR > TD.time {
+  text-align: right;
+}
+
+#logtable > tbody > TR > TH.requestId {
+  width: 2em;
+}
+#logtable > tbody > TR > TH.requestType {
+  width: 9em;
+}
+#logtable > tbody > TR > TH.severity {
+  width: 8em;
+}
+#logtable > tbody > TR > TH.message {
+  min-width: 12em;
+}
+#logtable > tbody > TR > TH.date {
+  width: 5em;
+}
+#datehead SPAN.link {
+  text-decoration: underline;
+}
+#datehead {
+  cursor: pointer
+}
+#refreshbutton {
+  width: 7em;
+}
+.fakelink {
+  text-decoration: underline;
+  font-style: italic;
+  cursor: pointer;
+}
+#logbuffer > .rightlink {
+  float: right;
+}
+#logbuffer > .leftlink {
+  float: left;
+}
+#logtable > tbody > TR.severity0 {
+  background: #ffdddd; /* red */
+/*  color: #dd3333; */
+}
+#logtable > tbody > TR.severity1 {
+  background: #ffeedd; /* orange */
+/*  color: #ff7700; */
+}
+#logtable > tbody > TR.severity2 {
+  background: #e7ffe7;
+/*  color: green; */
+}
+#logtable > tbody > TR.severity3 {
+  background: #e7e7ff; 
+/*  color: blue; */
+}
+#logtable > tbody > TR.severity4 {
+  color: #555555;
+}
+body {
+  background: white;
+  padding: 0;
+  margin: 0;
+}
+body > h1 {
+  padding-left: 10px;
+}
+body > h2 {
+  padding-left: 10px;
+}
+#logbuffer > .center {
+  text-align: center;
+  padding-bottom: 5px;
+}
+body > .about {
+  font-size: 80%;
+  margin: 1em;
+  color: gray;
+}
+body > .about a {
+  color: #55c;
+  text-decoration: underline;
+}
+</style>
+</head>
+<body onload="load();">
+%header%
+<div class="about"><a href="http://appjet.com/docs/ide#debuglog" target="_blank">Learn more about the debug log.</div></a>
+<div id="logbuffer">(Looks like you don't have javascript installed! This dashboard requires javascript.)</div>
+</body>
+</html>
