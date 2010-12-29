@@ -4,11 +4,11 @@ All the software you need to host AppJet apps.
 
 This repository hosts our additions to the original Appjet.jar web application framework. It contains everything needed to run 
 Appjet apps locally or hosted on your own server. The same framework is running 
-on http://apps.jgate.de where you can also host your appjet applications. 
+on <http://apps.jgate.de> where you can also host your appjet applications. 
 
 ## Download
 
-[appjet-1.0.4.jar](http://jgate.de/jar/appjet-1.0.4.jar)  —  Dec 12 2010 20:47:10 GMT+0100
+[appjet-1.0.4.jar](http://jgate.de/jar/appjet-1.0.4.jar)  --  Dec 12 2010 20:47:10 GMT+0100
 
 ## Requirements
 
@@ -25,7 +25,7 @@ Just put the jar file somewhere accessible from the command prompt.
 
 	$ java -jar appjet-1.0.4.jar myapp.js
 	
-That's it! _myapp.js_ should contain the same JavaScript code that you would use for an app hosted on appjet.com.
+That's it! _myapp.js_ should contain the same JavaScript code that you would use for an app hosted on apps.jgate.de.
 
 
 ## Contributing to Appjet.jar
